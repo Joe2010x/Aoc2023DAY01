@@ -5,13 +5,16 @@ class Program
 {
     static void Main(string[] args)
     {
-        var lines = FileReader.ReadFile("d1.txt");
-        var listOfDigits = lines.Select(l => GetAllDigits(l)).ToArray();
-        var listOfNum = listOfDigits.Select(l => int.Parse(l)).ToArray();
-        Console.WriteLine(listOfNum.Sum());
+        var lines = FileReader.ReadFile("d0.txt");
+        var listOfDigits1 = lines.Select(l => GetAllDigits(l, 1)).ToArray();
+        var listOfDigits2 = lines.Select(l => GetAllDigits(l, 2)).ToArray();
+        var listOfNum1 = listOfDigits1.Select(l => int.Parse(l)).ToArray();
+        var listOfNum2 = listOfDigits2.Select(l => int.Parse(l)).ToArray();
+        Console.WriteLine("AOC 2023 Day 01 part 1 result: "+listOfNum1.Sum());
+        Console.WriteLine("AOC 2023 Day 01 part 2 result: "+listOfNum2.Sum());
     }
 
-    public static string GetAllDigits(string word)
+    public static string GetAllDigits(string word, int indicator)
     {
         var digits = "0123456789";
         var wordDigits = new List<string>()
@@ -24,6 +27,7 @@ class Program
             var firstChar = subString[0];
             if (digits.Contains(firstChar))
             {
+                resultPart1 += firstChar;
                 resultPart2 += firstChar;
             }
             else
@@ -42,7 +46,8 @@ class Program
             }
 
         }
-
-        return resultPart2[0].ToString() + resultPart2[resultPart2.Length - 1].ToString();
+        return indicator == 1 
+        ? resultPart1[0].ToString() + resultPart1[resultPart1.Length - 1].ToString() 
+        : resultPart2[0].ToString() + resultPart2[resultPart2.Length - 1].ToString();
     }
 }
